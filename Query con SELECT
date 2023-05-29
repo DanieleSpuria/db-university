@@ -31,11 +31,11 @@
     WHERE `level` = 'magistrale';
 
 (7)
-    SELECT COUNT(*) AS 'Numero Dipartimenti' 
+    SELECT COUNT(*) AS `numero_dipartimenti`
     FROM `departments`;
     (o leggi l'ultimo id)
 
 (8)
-    SELECT COUNT(*) AS 'Insegnanti stelefonati' 
+    SELECT COUNT(*) AS `insegnanti_stelefonati` 
     FROM `teachers` 
     WHERE `phone` IS NULL;
