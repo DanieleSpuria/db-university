@@ -1,0 +1,65 @@
+(1) 
+    SELECT `students`.*
+    FROM `students`
+    JOIN `degrees`
+    ON `degrees`.`id` = `students`.`degree_id`
+    WHERE `degrees`.`name` = 'corso di laurea in economia';
+
+(2)
+    SELECT `degrees`.* 
+    FROM `degrees`
+    JOIN `departments`
+    ON  `departments`.`id` = `degrees`.`department_id`
+    WHERE `departments`.`name` = 'Dipartimento di Neuroscienze'
+    AND `degrees`.`level` = 'magistrale';
+
+(3)
+    SELECT `courses`.* 
+    FROM `teachers`
+    JOIN `course_teacher`
+    ON  `teachers`.`id` = `course_teacher`.`teacher_id`
+    JOIN `courses`
+    ON `course_id` = `courses`.`id`
+    WHERE `teachers`.`id` = 44;
+
+(4)
+    SELECT `students`.`id`, `students`.`registration_number`, `students`.`name`, `students`.`surname`, `degrees`.`name` AS `corso_di_laurea`, `departments`.`name` AS `dipartimento`
+    FROM `departments` 
+    JOIN `degrees` 
+    ON `departments`.`id` = `degrees`.`department_id` 
+    JOIN `students` 
+    ON `degrees`.`id` = `students`.`degree_id`; 
+
+(5)
+    SELECT `degrees`.`name` AS `corso_di_laurea`, `courses`.`name` AS `corso`, `teachers`.`surname`, `teachers`.`name`
+    FROM `degrees`
+    JOIN `courses`
+    ON `degrees`.`id` = `courses`.`degree_id`
+    JOIN `course_teacher`
+    ON `courses`.`id` = `course_teacher`.`course_id`
+    JOIN `teachers`
+    ON `course_teacher`.`teacher_id` = `teachers`.`id`;
+
+(6)
+    SELECT `teachers`.*
+    FROM `departments`
+    JOIN `degrees`
+    ON `departments`.`id` = `degrees`.`department_id`
+    JOIN `courses`
+    ON `degrees`.`id` = `courses`.`degree_id`
+    JOIN `course_teacher`
+    ON `courses`.`id` = `course_teacher`.`course_id`
+    JOIN `teachers`
+    ON `course_teacher`.`teacher_id` = `teachers`.`id`
+    WHERE `departments`.`name` = "Dipartimento di Matematica";
+
+(7)
+    SELECT `exams`.`id` AS `sessione`, `exams`.`date` AS `data`,`students`.`id` AS `id_studente`, `students`.`registration_number` AS `matricola`, `students`.`name`, `students`.`surname` , COUNT(`exam_student`.`vote`) AS `tentativi`, MAX(`exam_student`.`vote`) AS `voto_piu_alto` 
+    FROM `students` 
+    JOIN `exam_student` 
+    ON `students`.`id` = `exam_student`.`student_id` 
+    JOIN `exams` 
+    ON `exam_student`.`exam_id` = `exams`.`id`
+    WHERE `exam_student`.`vote` >= 18 
+    GROUP BY `students`.`id`
+    ORDER BY `exams`.`id`;
